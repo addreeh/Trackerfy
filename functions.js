@@ -83,59 +83,49 @@ function generateMatrix(rows, cols, artistsData) {
     return matriz;
 }
 
-async function performBackgroundRemoval(imagePath) {
-    try {
-        const resultBlob = await removeBackground(imagePath);
-        const resultBuffer = Buffer.from(await resultBlob.arrayBuffer());
-
-        const base64String = resultBuffer.toString('base64');
-
-        const options = {
-            apiKey: process.env.IMGBB_API_KEY, // MANDATORY
-            expiration: 300,
-            base64string: base64String, // OPTIONAL: pass an URL to imgBB (max 32Mb)
-        };
-
-        return imgbbUploader(options)
-            .then((response) => {
-                return response.display_url;
-            })
-            .catch((error) => {
-                console.error(error);
-                return imagePath;
-            });
-    } catch (error) {
-        console.error("Error al intentar eliminar el fondo:", error);
-        throw error;
-    }
-}
-
-
 // async function performBackgroundRemoval(imagePath) {
 //     try {
 //         const resultBlob = await removeBackground(imagePath);
 //         const resultBuffer = Buffer.from(await resultBlob.arrayBuffer());
 
-//         let tempDir = path.join(__dirname, 'public');
-//         tempDir = path.join(tempDir, 'temp');
-//         console.log(tempDir);
+//         const base64String = resultBuffer.toString('base64');
 
-//         await fs.mkdir(tempDir, { recursive: true });
-
-//         const timestamp = new Date().toISOString().replace(/:/g, '_');
-//         const tempImagePath = path.join(tempDir, `imagen_${timestamp}.png`);
-//         console.log(tempImagePath);
-
-//         await fs.writeFile(tempImagePath, resultBuffer);
-
-//         return {
-//             imagePath: `temp/imagen_${timestamp}.png`,
+//         const options = {
+//             apiKey: process.env.IMGBB_API_KEY, // MANDATORY
+//             expiration: 300,
+//             base64string: base64String, // OPTIONAL: pass an URL to imgBB (max 32Mb)
 //         };
+
+//         return imgbbUploader(options)
+//             .then((response) => {
+//                 return response.display_url;
+//             })
+//             .catch((error) => {
+//                 console.error(error);
+//                 return imagePath;
+//             });
 //     } catch (error) {
 //         console.error("Error al intentar eliminar el fondo:", error);
 //         throw error;
 //     }
 // }
+
+
+async function performBackgroundRemoval(imagePath) {
+    try {
+        const resultBlob = await removeBackground(imagePath);
+        const resultBuffer = Buffer.from(await resultBlob.arrayBuffer());
+        const dataUri = `data:image/png;base64,${resultBuffer.toString('base64')}`;
+
+        return {
+            resultBuffer: resultBuffer,
+            dataUri: dataUri,
+        };
+    } catch (error) {
+        console.error("Error al intentar eliminar el fondo:", error);
+        throw error;
+    }
+}
 
 function getPlaylist(url) {
     const tracksInfo = []
