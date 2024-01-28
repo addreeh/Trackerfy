@@ -8,7 +8,7 @@ A web application to explore the rhythm of public [Spotify](https://www.spotify.
 
 ## Installation
 To use the applicattin you need to install the required packages and create an application on Spotify Developers.
-Use the package manager [npm]([https://pip.pypa.io/en/stable/](https://www.npmjs.com/)) to install requirements.
+Use the package manager [npm]([https://www.npmjs.com/]) to install requirements.
 
 ```bash
 npm install
