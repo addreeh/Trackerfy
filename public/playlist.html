@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang=es>
+<head>
+<meta charset=UTF-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="index, follow">
+<meta name=description content="Trackerfy - Tools to interact with the Spotify API">
+<meta name=keywords content="Trackerfy, Spotify, API, statistics, playlists, wrappeds, downloads, music">
+<meta name=author content=@adripino_>
+<meta property=og:title content="Trackerfy - Spotify Tools">
+<meta property=og:description content="Obtén estadísticas, wrappeds y más con Trackerfy, la aplicación para la API de Spotify.">
+<link rel=icon type=image/svg href=images/favicon.svg>
+<link rel=preload href=playlist.css as=style>
+<link rel=stylesheet href=playlist.css>
+<link rel="preconnect" href="https://i.ibb.co">
+<script defer src=https://unpkg.com/color.js@1.2.0/dist/color.js></script>
+<title>Trackerfy</title>
+</head>
+<body>
+<header>
+<nav>
+<svg class="icon icon-tabler icon-tabler-search" width=24 height=24 viewBox="0 0 24 24" stroke-width=1.5 stroke=#ffffff fill=none stroke-linecap=round stroke-linejoin=round>
+<path stroke=none d="M0 0h24v24H0z" fill=none />
+<path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>
+<path d="M21 21l-6 -6"/>
+</svg>
+<input placeholder="Search artist">
+</nav>
+<img loading=lazy src=images/logo.webp alt="Trackerfy Logo">
+<svg class="icon icon-tabler icon-tabler-dots-vertical" width=24 height=24 viewBox="0 0 24 24" stroke-width=2 stroke=currentColor fill=none stroke-linecap=round stroke-linejoin=round>
+<path stroke=none d="M0 0h24v24H0z" fill=none />
+<path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>
+<path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>
+<path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>
+</svg>
+</header>
+<main>
+<section>
+<div class=left-section>
+<p>Top Artist</p>
+<p id=top-artist-name></p>
+<p id=top-artist-percentage>
+</p><p id=top-artist-songs></p>
+</div>
+<div class=right-section>
+<img id=top-artist-img src="" alt="Top Artist Image" loading=lazy>
+</div>
+<img class=back-img src=images/back.webp alt="Background Image" loading=lazy>
+</section>
+<section>
+<span class=left-text></span>
+<span class=center-text>Top 2</span>
+<span class=right-text>Top 3</span>
+</section>
+<section>
+<div class=left-col>
+<div class=image-container>
+<div class=small-image id=2-info-img><svg id=2-artist-info class="icon icon-tabler icon-tabler-info-small" width=30 height=30 viewBox="0 0 24 24" stroke-width=2 stroke=#959595 fill=none stroke-linecap=round stroke-linejoin=round>
+<path stroke=none d="M0 0h24v24H0z" fill=none />
+<path d="M12 9h.01"/>
+<path d="M11 12h1v4h1"/>
+</svg></div>
+<img id=2-artist-img src="" alt="Second Artist Image" loading=lazy>
+</div>
+<div class=content>
+<h4 id=2-artist-name></h4>
+<p id=2-artist-percentage></p>
+</div>
+</div>
+<div class=right-col>
+<div class=image-container>
+<div class=small-image id=3-info-img><svg id=3-artist-info class="icon icon-tabler icon-tabler-info-small" width=30 height=30 viewBox="0 0 24 24" stroke-width=2 stroke=#959595 fill=none stroke-linecap=round stroke-linejoin=round>
+<path stroke=none d="M0 0h24v24H0z" fill=none />
+<path d="M12 9h.01"/>
+<path d="M11 12h1v4h1"/>
+</svg></div>
+<img id=3-artist-img src="" alt="Third Artist Image" loading=lazy>
+</div>
+<div class=content>
+<h4 id=3-artist-name></h4>
+<p id=3-artist-percentage></p>
+</div>
+</div>
+</section>
+<section>
+<p class=other>Other artists</p>
+<p class=new-text>Sort Descending<svg id=new-svg class="icon icon-tabler icon-tabler-sort-descending" width=15 height=15 viewBox="0 0 24 24" stroke-width=2 stroke=#C6C6C6 fill=none stroke-linecap=round stroke-linejoin=round>
+<path stroke=none d="M0 0h24v24H0z" fill=none />
+<path d="M4 6l9 0"/>
+<path d="M4 12l7 0"/>
+<path d="M4 18l7 0"/>
+<path d="M15 15l3 3l3 -3"/>
+<path d="M18 6l0 12"/>
+</svg></p>
+</section>
+<section>
+</section>
+</main>
+<section>
+<div class=modal-content>
+<div class=modal-row>
+<div class=modal-column>
+<div class=square>
+<img id=playlist-image src="" alt=Imagen loading=lazy>
+</div>
+</div>
+<div class=modal-text>
+<p id=playlist-name></p>
+<p id=playlist-owner></p>
+<p id=playlist-songs><svg class="icon icon-tabler icon-tabler-music" width=24 height=24 viewBox="0 0 24 24" stroke-width=2 stroke=#42C83C fill=none stroke-linecap=round stroke-linejoin=round>
+<path stroke=none d="M0 0h24v24H0z" fill=none />
+<path d="M3 17a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/>
+<path d="M13 17a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/>
+<path d="M9 17v-13h10v13"/>
+<path d="M9 8h10"/>
+</svg><svg class="icon icon-tabler icon-tabler-user" width=24 height=24 viewBox="0 0 24 24" stroke-width=2 stroke=currentColor fill=none stroke-linecap=round stroke-linejoin=round>
+<path stroke=none d="M0 0h24v24H0z" fill=none />
+<path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/>
+<path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/>
+</svg><svg class="icon icon-tabler icon-tabler-clock-filled" width=24 height=24 viewBox="0 0 24 24" stroke-width=2 stroke=currentColor fill=none stroke-linecap=round stroke-linejoin=round>
+<path stroke=none d="M0 0h24v24H0z" fill=none />
+<path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-5 2.66a1 1 0 0 0 -.993 .883l-.007 .117v5l.009 .131a1 1 0 0 0 .197 .477l.087 .1l3 3l.094 .082a1 1 0 0 0 1.226 0l.094 -.083l.083 -.094a1 1 0 0 0 0 -1.226l-.083 -.094l-2.707 -2.708v-4.585l-.007 -.117a1 1 0 0 0 -.993 -.883z" stroke-width=0 fill=currentColor />
+</svg></p>
+</div>
+</div>
+<div class=progress-container>
+<div class=progress-bar></div>
+</div>
+</div>
+</section>
+<section>
+<div class=modal-content-2>
+<div class=artist-content>
+<img src="" alt=Artist>
+</div>
+<p class=artist-content-name></p>
+<div class=row-container>
+<div class=column>
+<p id=artist-songs></p>
+<p id=artist-percentage></p>
+</div>
+<div class=column>
+<h5>Followers</h5>
+<p class=followers></p>
+</div>
+</div>
+<p class=songs>Songs</p>
+<div id=songs-container class=songs-container></div>
+</div>
+</section>
+<section>
+<div class=loader></div>
+</section>
+<script src=playlist.js></script>
+</body>
+</html>

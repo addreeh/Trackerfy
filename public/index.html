@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang=es>
+<head>
+<meta charset=UTF-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="index, follow">
+<meta name=description content="Trackerfy - Tools to interact with the Spotify API">
+<meta name=keywords content="Trackerfy, Spotify, API, statistics, playlists, wrappeds, downloads, music">
+<meta name=author content=@adripino_>
+<meta property=og:title content="Trackerfy - Spotify Tools">
+<meta property=og:description content="Obtén estadísticas, wrappeds y más con Trackerfy, la aplicación para la API de Spotify.">
+<link rel=icon type=image/svg href=images/favicon.svg>
+<link rel=preload href=index.css as=style>
+<link rel=stylesheet href=index.css>
+<link rel=preload href=fonts/satoshi-variable.woff2 as=font type=font/woff2 crossorigin>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css>
+<title>Trackerfy.</title>
+<body>
+<header>
+</header>
+<main>
+<img loading=lazy src=images/logo.webp alt="Trackerfy Logo">
+<p>Analyzes your Spotify public playlists, providing a breakdown of artist distribution.</p>
+<section class=fields>
+<input type="text" placeholder="Playlist URL">
+<button type=button><img src=images/play.webp alt=Submit></button>
+</section>
+<section class=question>
+<h3 class="animate__animated animate__pulse animate__infinite">How to Use</h3>
+</section>
+</main>
+<footer>
+</footer>
+<section>
+<div class=loader></div>
+</section>
+<section>
+<div class=modal-content>
+<span class=close-btn></span>
+<h2>How to get Playlist URL</h2>
+<div class=slideshow-container>
+<div class="slides fade">
+<img src=images/tutomb.webp>
+</div>
+<div class="slides fade">
+<img src=images/tutopc.webp>
+</div>
+<a class=prev>&#10094;</a>
+<a class=next>&#10095;</a>
+</div>
+<br>
+<div class=dots>
+<span class=dot></span>
+<span class=dot></span>
+</div>
+<p>On <span>PC</span> just right-click on the playlist, then click on share and select copy URL.
+</p>
+<p>After that you'll have it on the <span>clipboard</span>. Then <span>paste</span> it into the text field of the app and press <span>Continue</span>.</p>
+</div>
+</section>
+<section>
+<div class=error-content>
+<p id=error-message></p>
+<button><span>Cerrar </span></button>
+</div>
+</section>
+<script defer src=index.js loading=defer></script>
+<noscript>
+<p>This page requires JavaScript to function properly. Please enable JavaScript in your browser.</p>
+</noscript>
+</body>
+</head></html>
