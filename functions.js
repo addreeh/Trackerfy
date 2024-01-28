@@ -117,10 +117,7 @@ async function performBackgroundRemoval(imagePath) {
         const resultBuffer = Buffer.from(await resultBlob.arrayBuffer());
         const dataUri = `data:image/png;base64,${resultBuffer.toString('base64')}`;
 
-        return {
-            resultBuffer: resultBuffer,
-            dataUri: dataUri,
-        };
+        return dataUri;
     } catch (error) {
         console.error("Error al intentar eliminar el fondo:", error);
         throw error;
