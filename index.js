@@ -1,7 +1,8 @@
+require('dotenv').config();
 const path = require("path")
-const fastify = require('fastify')({
-    logger: true
-})
+
+const express = require('express');
+const app = express();
 const port = process.env.PORT || 3000;
 
 
@@ -12,59 +13,61 @@ const {
     generateMatrix,
     getPlaylist,
 } = require('./functions');
-const { log } = require("console");
 
-fastify.register(require('@fastify/static'), {
-    root: path.join(__dirname, 'public'),
-    prefix: '/'
+
+// Configura middleware para manejar datos JSON
+app.use(express.json());
+// Configura el directorio de archivos estáticos (para servir el HTML y otros recursos)
+app.use(express.static('public'));
+
+// Endpoint para servir el archivo HTML en la ruta '/'
+app.get('/', (req, res) => {
+    res.sendFile('index.html', { root: path.join(__dirname, 'public') });
 })
 
-fastify.get('/', (request, reply) => {
-    reply.sendFile('index.html')
+// Endpoint para servir el archivo HTML en la ruta '/'
+app.get('/playlist', (req, res) => {
+    res.sendFile('playlist.html', { root: path.join(__dirname, 'public') });
 })
 
-fastify.get('/playlist', (request, reply) => {
-    reply.sendFile('playlist.html')
-})
-
-fastify.get('/indexdata', async function (request, reply) {
+app.get('/indexdata', async function (req, res) {
     try {
         const { first17Artists, restOfArtists } = await getArtistsImage();
         const matriz1 = generateMatrix(7, 5, first17Artists);
         const matriz2 = generateMatrix(2, 5, restOfArtists);
 
-        reply.send({ matriz1, matriz2 });
+        res.send({ matriz1, matriz2 });
     } catch (error) {
-        reply.status(500).send({ error: 'Error obteniendo datos' });
+        res.status(500).send({ error: 'Error obteniendo datos' });
     }
 })
 
-fastify.post('/submitPlaylist', async function (request, reply) {
+app.post('/submitPlaylist', async function (req, res) {
     try {
-        playlistUrl = request.body.urlInput;
-        reply.send({ message: 'Información de la lista de reproducción recibida correctamente.' });
+        playlistUrl = req.body.urlInput;
+        res.send({ message: 'Información de la lista de reproducción recibida correctamente.' });
     } catch (error) {
-        reply.status(500).send({ error: 'Error al procesar la información de la lista de reproducción' });
+        res.status(500).send({ error: 'Error al procesar la información de la lista de reproducción' });
     }
 });
 
 
-fastify.get('/playlistdata', async (request, reply) => {
+app.get('/playlistdata', async (req, res) => {
     try {
         const data = await getPlaylist(playlistUrl);
-        reply.send({
+        res.send({
             playlistInfo: data.playlistInfo,
             detailedArtistInfo: data.detailedArtistInfo,
         });
     } catch (error) {
-        fastify.log.error('Error en la ruta /playlist:', error);
-        reply.status(500).send({ error: 'Error obteniendo la información de la playlist' });
+        app.log.error('Error en la ruta /playlist:', error);
+        res.status(500).send({ error: 'Error obteniendo la información de la playlist' });
     }
 });
 
-fastify.listen({ port }, function (err, address) {
-    if (err) {
-        fastify.log.error(err)
-        process.exit(1)
-    }
-})
+app.listen(port, () => {
+    console.log(`Servidor escuchando en http://localhost:${port}`);
+});
+
+module.exports = app;
+
